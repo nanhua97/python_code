@@ -1,0 +1,18 @@
+import sqlite3
+conn = sqlite3.connect('test.db')   #打开数据库文件
+cur = conn.cursor()         #获取游标对象
+#写入
+cur.execute("create table demo (id int,name text)")
+cur.execute("insert into demo values (%d,'%s')"%(1,'aaa'))
+cur.execute("insert into demo values (%d,'%s')"%(2,'bbb'))
+cur.execute("insert into demo values (%d,'%s')"%(3,'ccc'))
+#查询
+cur.execute('select * from demo')
+rows = cur.fetchall()
+for i in rows:
+    print i
+conn.commit()   #提交事务
+
+cur.close()    #关闭游标对象
+ 
+conn.close()   #关闭数据库连接

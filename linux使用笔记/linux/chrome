@@ -1,0 +1,15 @@
+sudo wget https://www.linuxidc.com/files/repo/google-chrome.list -P /etc/apt/sources.list.d/
+将下载源加入系统源列表
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-get add -
+导入谷歌软件的公匙
+sudo apt-get update
+对当前系统可用更新列表进行更新
+sudo apt-get install google-chrome-stable
+安装谷歌浏览器稳定版
+
+
+
+sudo apt-get update
+获取更新源列表
+sudo update-manager -c -d
+把现有内容更新到最新的资源

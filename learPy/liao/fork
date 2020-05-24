@@ -1,0 +1,13 @@
+import os
+print('a process %s' % (os.getpid(),))
+a = os.fork()
+if a == 0:
+    print('child %s parent %s' % (os.getpid(),os.getppid()))
+else:
+    print('%s created a child process (%s)' % (os.getpid(),a))
+print('a process %s' % (os.getpid(),))
+b = os.fork()
+if b == 0:
+    print('child %s parent %s' % (os.getpid(),os.getppid()))
+else:
+    print('%s created a child process (%s)' % (os.getpid(),b))

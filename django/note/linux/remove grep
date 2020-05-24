@@ -1,0 +1,7 @@
+uname -a     查看当前内核
+dpkg --get-selections|grep linux   查看历史内核
+sudo apt-get remove 内核名 
+
+sudo update-grub
+
+/boot

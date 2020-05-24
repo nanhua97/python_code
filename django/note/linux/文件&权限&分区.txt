@@ -1,0 +1,128 @@
+df -h 查看已有分区
+dump2fs -h /dev/sda2  查看分区详细信息
+mount -o remount，acl/ 重新挂载根分区并加入acl权限（临时开启分区ACL权限）
+永久开启ACL权限
+	vim /etc/fstab   加入acl
+	mount -o remount 重新挂载文件或重启动系统是修改生效
+查看ACL命令
+getfacle 文件名   查看ACL权限
+setfacl           设置ACL权限
+         -m       设定ACL权限
+	 -x       删除制定的ACL权限
+	 -b 	  删除所有的ACL权限
+	 -d 	  设定默认的ACL权限
+	 -k  	  删除默认ACL权限
+	 -R	  递归设定ACL权限
+setfacl -m u:用户名:权限 文件名 
+setfacl -m g:组名:权限 文件名
+shattr【+-=】【选项】文件或目录名
++：增加权限
+-：删除权限
+=：等于某权限
+i: 若给文件此权限，文件不能修改删除；若给目录此属性，目录下不允许建立和删除文件，但是可修改目录下原有的文件
+a:若对文件设置a属性，只能在此文件中增加数据，不能删除和修改数据；若对目录设置此属性，那么只允许在目录中建立和修改文件，但是不能删除
+lsattr 选项 文件名
+       -a           显示所有文件和目录
+       -d           若目标是目录，只列出自身属性，而不是子文件的
+
+sudo命令
+管理员先赋予普通用户sudo权限
+visudo （实际修改的是/etc/sudoers/文件）
+
+#root    ALL=(ALL)		   	    ALL
+#用户名  被管理主机的地址=（可使用的身份） 授权命令（绝对路径）
+nanhua   ALL=/usr/sbin/shutdown -r now(赋予nanhua重启命令)
+nanhua   IP=绝对路径
+
+su - nanhua
+sudo -l                查看可用的sudo命令
+sudo /usr/sbin/shutdown -r now     普通用户执行sudo赋予的命令
+
+#%wheel  ALL=(ALL)			    ALL
+#%组名   被管理主机的地址=（可使用的身份） 授权命令（绝对路径）
+
+
+
+
+
+文件系统查看命令df
+df 【选项】【挂载点】
+   -a   显示所有的文件系统信息，包括特殊文件系统，如/proc，/sysfs
+   -h   使用习惯单位显示容量
+   -T   显示文件系统类型
+   -m   以MB为单位显示容量
+   -k   以kb为单位显示容量（默认）
+
+
+统计目录或文件大小（一般为目录，因为ls只查询目录本身大小）
+du 【选项】【目录或文件名】
+   -a   显示每个子文件的磁盘占用量，默认只统计子目录的磁盘占用量
+   -h   使用习惯单位显示磁盘占用量
+   -s   统计总占用量，而不列出子目录和子文件的占用量
+
+
+文件系统修复命令
+fsck 【选项】分区设备文件名
+      -a   不用显示用户提示，自动修复系统文件
+      -y   自动修复。和-a作用一样，不过有些文件系统只支持-y
+
+显示磁盘状态命令
+dumpe2fs 分区设备文件名
+
+
+查询与自动挂载
+mount 【-l】    查询系统中已挂载的设备
+mount 【-a】    根据配置文件/etc/fstab的内容，自动挂载
+
+挂载命令格式
+mount 【-t 文件系统】【-L 卷标名】【-o 特殊选项】设备文件名 挂载点
+选项 ：
+      -t 文件系统：加入文件系统类型来制定挂在的类型，可以ext3，ext4，iso9660等文件系统
+      -L 卷标名：挂载制定卷标的分区，而不是安装设备文件名挂载
+      -o 特殊选项：可以指定挂载的额外选项
+
+挂载光盘
+mkdir /mnt/cdrom
+mount /dev/cdrom/ /mnt/cdrom
+cd /mnt/cdrom
+卸载光盘
+umount /mnt/cdrom
+
+挂载U盘
+mkdir /mnt/usb
+fdisk -l（查看U盘分配的设备文件名）
+mount -t vfat 分配的设备文件名 mnt/usb
+cd /mnt/usb
+  
+linux默认不支持NTFS分区，无法识别NTFS分区的硬盘
+http://www.tuxera.com/community/open-source-ntfs-3g/
+mount -t ntfs-3g 分配的设备文件名 挂载点
+
+
+fdisk命令分区过程（重启后挂载会消失）
+fdisk -l  查看所有设备文件名
+fdisk 硬盘
+   n  添加分区（p 主分区 e 扩展分区 l 逻辑分区）
+   p  查看已有分区
+   d  删除分区
+   m  查看帮助
+   t  修改HEX码（82为swap）
+   w  保存退出
+若保存退出失败可使用partprobe
+partprobe 重新读取分区表信息
+fdisk -l  查看所有设备文件名
+mkfs -t 文件格式（ext4） 设备文件名（格式化分区，扩展分区不可被格式化）
+mkdir 挂载点
+mount 设备文件名 挂载点
+df 查看分区是否挂载
+
+mkswap 设备文件名  （格式化swap分区）
+swapon 设备文件名  （加入swap分区）
+swapoff 设备文件名  （取消swap分区）
+
+分区自动挂载与fstab文件修复
+vim /etc/fstab
+（UUID 挂载点 文件系统名称 挂载参数 指定分区是否被dump备份 指定分区是否被fsck检查）
+/dev/sdb1 /mnt/disk1  ext4 defaults 1 2
+/dev/sdb6 swap        swap defaults 0 0
+free 查看内存和缓存（G,M,K）

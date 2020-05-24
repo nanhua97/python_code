@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Title
+
+    </title>
+    {% block js %}
+        <script>alert('hahah')</script>
+    {% endblock js%}
+</head>
+<body>
+
+    {% block top %}
+    {{ head }}
+    {% endblock top %}
+    <hr>
+    {% block content %}
+    这是中部
+    {% endblock content %}
+    <hr>
+    {% block floor %}
+    这是底部
+    {% endblock floor %}
+
+
+
+
+</body>
+</html>

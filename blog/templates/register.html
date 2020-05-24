@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+{% block title %}
+<title>register</title>
+{% endblock %}
+{% block style %}
+<style>
+    #top{
+	    width:100%;
+            height:200px;
+	    background-color:red;
+    }
+    #footer{
+	    width:100%;
+            height:200px;
+	    background-color:blue;
+    }
+</style>
+{% endblock %}
+{% block script %}
+	<script>
+	    $(function(){
+		    $('#submit').click(function(){
+		        alert('123')
+		    })
+	    })
+	</script>
+{% endblock %}
+{% block top %}
+<div id='top'></div>
+{% endblock %}
+{% block mainbody %}
+<form action='http://127.0.0.1:8000/app/toLogin'>
+	<label for='username'>username:</label> <input type='text' id='username' name='username' />
+	<label for='password'>password:</label> <input type='text' id='password' name='password' />
+	<button id='submit' type='submit'>submit</button>
+</form>
+{% endblock %}
+{% block footer %}
+<div id='footer'></div>
+{% endblock %}

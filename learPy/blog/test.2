@@ -1,0 +1,31 @@
+#!uer/bin/env/python3
+# -*- coding:utf-8 -*-
+import time
+import multiprocessing
+def worker1(interval):
+    print('worker1')
+    print(time.ctime())
+    time.sleep(interval)
+    print('worker1 end')
+    
+def worker2(interval):
+    print('worker2')
+    print(time.ctime())
+    time.sleep(interval)
+    print('worker2 end')
+
+def worker3(interval):
+    print('worker3')
+    print(time.ctime())
+    time.sleep(interval)
+    print('worker3 end')
+p1 = multiprocessing.Process(target = worker1,args = (1,))
+p2 = multiprocessing.Process(target = worker2,args = (2,))
+p3 = multiprocessing.Process(target = worker3,args = (3,))
+p1.start()
+p2.start()
+p3.start()
+print('The number of the cpu is:',str(multiprocessing.cpu_count()))
+for p in multiprocessing.active_children():
+    print('child p.name:'+p.name+'\tp.id'+str(p.pid))
+    print('END')

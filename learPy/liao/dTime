@@ -1,0 +1,26 @@
+#!/usr/bin/env/python3
+# -*- coding:utf-8 -*-
+from datetime import datetime,timedelta,timezone
+#获取当前时间
+now = datetime.now()
+#设置时间
+dt = datetime.datetime(1997,11,21,20,30,20)
+#时间戳秒数
+sce = dt.timestamp()
+#秒数变时间
+new_dt = datetime.fromtimestamp(sec)
+#字符串变时间
+str_dt=datetime.strptime('2012-11-21 13:38:56','%Y-%m-%d %H:%M:%S')
+#时间变字符串
+get_dt = str_dt.strftime('%a,%b %d %H:%M')
+#datetime加减
+del_now = now + timedelta(days=1,hours=2,minutes=3,second=4)
+#utc时间转换
+#创建utc_10时区
+tz_utc_10 = timezone(timedelta(hours=10))
+#强制设置utc_10时区
+utc_10_dt = now.replace(tzinfo=tz_utc_10)
+#拿到UTC时间并强制设置时区为UTC+0:00
+utc_dt = datetime.utcnow().replace(tzinfo=timezone.utc)
+#转换时区为北京时间
+bj_dt = utc_dt.astimezone(timezone(timedelta(hours=9)))

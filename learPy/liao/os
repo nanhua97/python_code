@@ -1,0 +1,17 @@
+import os
+a = []
+def no(dir):
+    f = os.listdir(os.path.abspath(dir))
+    a.extend(f)
+    for x in os.listdir(dir):
+        if os.path.isdir(x):
+            no(x)
+no('.')
+f = input('Please input your fileName:')
+for x in a:
+    if f in x:       
+        print(os.path.abspath(x))
+        break
+else:
+    print('Sorry,the file no find')
+       

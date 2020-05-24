@@ -1,0 +1,8 @@
+from urllib import request
+def getHtml(url):
+    page = request.urlopen(url)
+    html = page.read()
+    return html
+f = open('article.txt','wb')
+f.write(getHtml(http://www.biquge.com.tw/5_5729/8359941.html))
+f.close()

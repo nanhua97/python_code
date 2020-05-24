@@ -1,0 +1,15 @@
+   sddthis is the first file
+now,it's change
+the second change
+the third change
+<<<<<<< HEAD
+HEAD
+
+what
+maybe lost
+another change
+0436cce80f1a3cb0d88d6599ba69692c5a5ad9de
+maybe lost
+another change
+
+what 8d596e7642b673b153e3da09412905f2b2253336

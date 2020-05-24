@@ -1,0 +1,4 @@
+{% extends "register.html" %}
+{% block mainbody %}
+欢迎登陆
+{% endblock %}

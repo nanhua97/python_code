@@ -1,0 +1,81 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>省市区列表</title>
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!--<script type="text/javascript">-->
+        <!--$(function(){-->
+            <!--$.get('area1/',funtion(dic){-->
+                <!--pro=$('#pro');-->
+                <!--$.each(dic.data,function(index,item){-->
+                    <!--pro.append('<option value='+item[0]+'>'+item[1]+'</option>');-->
+                <!--})-->
+            <!--});-->
+            <!--$('#pro').change(function(){-->
+                <!--$.post($(this),val()+'/',function(dic){-->
+                    <!--city = $('#city');-->
+                    <!--city.empty().append('<option value="">请选择市</option>');-->
+                    <!--$.each(dic.data,function(index,item){-->
+                        <!--city.append('<option value='+item.id+'>'+item.title+'</option>');-->
+                    <!--})-->
+                <!--});-->
+            <!--});-->
+            <!--$('#city').change(function(){-->
+                <!--$.post($(this).val()+'/',function(dic){-->
+                    <!--dis=$('#dis');-->
+                    <!--dis.empty().append('<option value="">请选择区县</option>');-->
+                    <!--$.each(dic.data,function(index,item){-->
+                        <!--dis.append('<option value='+item.id+'>'+item.title+'</option>');-->
+                    <!--})-->
+                <!--})-->
+            <!--})-->
+
+        <!--});-->
+    <!--</script>-->
+    <script type="text/javascript">
+        $(function(){
+
+            $.get('area1/',function(dic) {
+                pro=$('#pro')
+                $.each(dic.data,function(index,item){
+                    pro.append('<option value='+item[0]+'>'+item[1]+'</option>');
+                })
+            });
+
+            $('#pro').change(function(){
+                $.get('/'+$(this).val()+'/',function(dic){
+                    city=$('#city');
+                    city.empty().append('<option value="">请选择市</option>');
+                    $.each(dic.data,function(index,item){
+                        city.append('<option value='+item.id+'>'+item.title+'</option>');
+                    })
+                });
+            });
+
+            $('#city').change(function(){
+                $.get($(this).val()+'/',function(dic){
+                    dis=$('#dis');
+                    dis.empty().append('<option value="">请选择区县</option>');
+                    $.each(dic.data,function(index,item){
+                        dis.append('<option value='+item.id+'>'+item.title+'</option>');
+                    })
+                })
+            });
+
+        });
+    </script>
+</head>
+<body>
+<select name="pro" id="pro">
+    <option value="">请选择省</option>
+</select>
+<select name="city" id="city">
+    <option value="">请选择市</option>
+</select>
+<select name="dis" id="dis">
+    <option value="">请选择县</option>
+</select>
+</body>
+</html>

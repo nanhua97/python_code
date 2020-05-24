@@ -1,0 +1,17 @@
+#!/uer/bin/env/python3
+#-*- coding:utf-8 -*-
+import re
+from urllib import request
+def getHtml(url):
+    a = request.urlopen(url)
+    html = a.read()
+    return html
+def getMes(html):
+    a = r'<[^>]*>'
+    b = re.compile(a)
+    l = b.split(a,html)
+    c = ''.join(l)
+    return c
+s = getHtml('https://read.qidian.com/chapter/9KJx0_VkmxAWXXlYBroA6g2/8UodGJzPdExMs5iq0oQwLQ2')
+k = getMes(s)
+print(k)

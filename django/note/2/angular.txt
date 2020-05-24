@@ -1,0 +1,41 @@
+var myApp=angular.module('myApp',function($provide,$controllerProvider,$filterProvider,$compileProvider){
+	$provide.provider('provider',function(){
+		this.$get=function(){
+			return {}
+		}
+	});
+	$provide.service('service',function(){
+		return {}
+	});
+	$provide.factory('factory',function(){
+		return {}
+	});
+	$controllerProvider.register('controller',function(){
+	
+	});
+	$filterProvider.register('filter',function(){
+		return function(obj){
+		
+		}
+	});
+	$compileProvider.directive('directive',function(){
+		return {}
+	});
+})
+myApp.service('service',function(){
+	return {}
+})
+myApp.factory('factory',function(){
+	return {}
+})
+myApp.controller('controller',function($scope){
+
+})
+myApp.filter('filter',function(){
+	return function(obj){
+	
+	}
+})
+myApp.directive('directiveName',function(){
+
+})

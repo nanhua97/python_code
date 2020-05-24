@@ -1,0 +1,27 @@
+#!/usr/bin/env/python3
+# -*- coding:utf-8 -*-
+import multiprocessing
+import time
+def worker1(interval):
+    print('worker1 start')
+    time.sleep(interval)
+    print('worker1 end')
+
+def worker2(interval):
+    print('worker2 start')
+    time.sleep(interval)
+    print('worker2 end')
+def worker3(interval):
+    print('worker3 start')
+    time.sleep(interval)
+    print('worker3 end')
+p1 =  multiprocessing.Process(target = worker1,args = (3,))
+p2 =  multiprocessing.Process(target = worker2,args = (3,))
+p3 =  multiprocessing.Process(target = worker3,args = (1,))
+p1.daemon = True
+p2.deamon = True
+p1.start()
+print('end1')
+p2.start()
+#p2.join()
+print('end2')

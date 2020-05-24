@@ -1,0 +1,16 @@
+import MySQLdb
+conn = MySQLdb.connect('localhost','root','lzt1121','testdb')
+cur = conn.cursor()         
+cur.execute("create table demo (id int,name text)")
+cur.execute("insert into demo values (%d,'%s')"%(1,'aaa'))
+cur.execute("insert into demo values (%d,'%s')"%(2,'bbb'))
+cur.execute("insert into demo values (%d,'%s')"%(3,'ccc'))
+cur.execute('select * from demo')
+rows = cur.fetchall()
+for i in rows:
+    print i
+conn.commit()   
+
+cur.close()    
+
+conn.close()  

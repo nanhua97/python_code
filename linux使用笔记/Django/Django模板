@@ -1,0 +1,84 @@
+HelloWorld/
+|-- HelloWorld
+|   |-- __init__.py
+|   |-- __init__.pyc
+|   |-- settings.py
+|   |-- settings.pyc
+|   |-- urls.py
+|   |-- urls.pyc
+|   |-- view.py
+|   |-- view.pyc
+|   |-- wsgi.py
+|   `-- wsgi.pyc
+|-- manage.py
+`-- templates
+    `-- hello.html
+修改setting.py: 'DIRS':[BASE_DIR+"/templates",],
+{% extends "base.html" %}
+{% block mainbody %}
+<p>继承自base.html</p>
+{% endblock %}
+
+
+{% if ... %}(可用and,or,not)
+       ...
+{% elif %}
+       ...
+{% else %}
+       ...
+{% endif %}
+
+
+
+{% for i in ... %}
+       {{i}}
+{% endfor %}
+
+
+{% ifequal a b%}(比较两个模板变量的值)
+        ...
+{% endifequal %}
+
+mysql数据库配置
+DATABASES = {
+    'default': {
+        'ENGINE':'django.db.backends.mysql',
+        'NAME':'hello',（库名）
+        'USER':'root',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'POST':'8888',
+    }
+}
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'blog',               # 添加此项
+)
+$ python manage.py migrate   # 创建表结构
+$ python manage.py makemigrations blog  # 让 Django 知道我们在我们的模型有一些变更
+$ python manage.py migrate blog   # 创建表结构
+
+Test.objects.get(id=1)
+Test.objects.filter(name="asss")
+Test.objects.all()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,100 @@
+
+查询未安装包都需要在Packages目录下用包全名
+RPM安装
+安装包依赖：rpmfind.net
+安装过的rpm包都在/var/lib/rpm/下
+rpm -ivh 包全名
+    -i（install）  安装
+    -v（verbose）  显示详细信息
+    -h（hash）     显示进度
+    --nodeps       不检测依赖性（一般只用于实验）
+
+RPM包升级
+rpm -Uvh 包全名
+    -U（upgrade）  升级
+
+RPM包卸载
+rpm -e 包名
+    -e（erase）    卸载
+    --nodeps       不检查依赖性
+
+rpm -q 包名        查询包是否安装
+rpm -qa 包名       查询所有已经安装的RPM包
+rpm -qi 包名       
+    -i	           查询软件信息（information）
+    -p             查询未安装包信息（package）
+rpm -ql 包名       查询文件安装位置
+    -l             列表（list）
+    -p             查询未安装包信息
+rpm -qf 系统文件名
+    -f             查询系统文件属于哪个软件包（file）
+rpm -qR 包名
+    -R             查询软件包的依赖性（requires）
+    -p             查询未安装包信息（package）
+rpm -V 已安装的包名 查看文件是否被改变
+rpm2cpio 包的绝对路径 | cpio -idv ./bin/文件原位置    用rpm包修复误删文件 
+
+
+常用yum命令
+yum list          查询所有可用软件包列表
+yum search 关键字  搜索服务器上所有和关键字相关的包
+yum -y install 包名   安装rpm包
+    -y                自动回答yes
+yum -y update 包名    升级rpm包（若不加包名，会自动升级包括linux内核在内的文件）
+    -y                自动回答yes
+yum -y remove 包名    卸载rpm包（会自动卸载依赖包，可能造成系统崩溃）
+    remove            卸载
+    -y                自动回答yes
+
+yum软件包组管理
+yum grouplist               查询所有可用的软件组列表
+yum groupinstall 软件组名   安装指定软件组
+yum groupremove 软件组名    卸载指定软件组
+
+源码包安装
+解压缩==》进入解压缩目录下==》。/configure --prefix=/usr/local/安装文件夹==》make && make install
+
+用户信息文件/etc/passwd
+影子文件/etc/shadow
+组信息文件/etc/group/ 组密码文件 /etc/gshadow
+
+用户管理命令
+usradd
+passwd
+usermod 
+chage      ：chage -d 0 用户名   要求用户一登录修改密码
+userdel      删除用户
+        -r   删除用户同时删掉家目录
+id     查出用户的uid，gid，组
+su     切换用户
+su - 用户名 切换用户，‘-’不能省
+su - 用户名 -c "命令"   只以另一个用户执行一次命令，但是不切换用户
+
+手工删除用户
+vim /etc/passwd
+vim /etc/shadow
+vim /etc/group
+vim /etc/gshadow
+re -rf /var/spool/mail/lamp
+re -rf /home/lamp/
+
+groupadd 组名      新建组名
+groupmod【选项】组名
+         -g GID             修改组ID
+	 -n 新组名 原组名   修改组名
+
+groupdel 组名      删除组名（组中不允许有主用户出现）
+gpasswd 选项 组名（操作的是附加组）
+	-a 用户名 组名 ：把用户加入到组
+	-d 用户名 组名 ：把用户从组中删除
+
+
+
+
+
+
+
+
+
+
+

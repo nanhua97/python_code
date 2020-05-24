@@ -1,0 +1,6 @@
+{% extends 'register.html' %}
+{% block mainbody %}
+<div>
+注册成功，请<a href='app/login'>返回登陆</a>
+<div>
+{% endblock %}

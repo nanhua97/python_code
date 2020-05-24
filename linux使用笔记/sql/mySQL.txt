@@ -1,0 +1,35 @@
+prompt 改变提示符
+mysql -u用户名 -p密码 --prompt \h(d,D,u)
+(提示符为当前主机，当前数据库名，当前日期，当前用户)
+可登入mysql后使用 prompt +参数  改变命令提示符
+
+SHOW CREATE DATABASE 库名    查看数据库创建时信息
+ALTER DATABASE 库名 CHARACTER SET = 编码格式（gbk，utf8...） 改变数据库编码方式
+SHOW DATABASES
+CREATE DATABASE 库名
+USE 库名
+CREATE TABLE 表格名（名称 类型，名称 类型.....）	创建表格
+SHOW COLUMNS FROM 表格名				查看表格格式
+INSERT INTO 表格名 VALUES(名称 类型，名称 类型.....)		插入数据
+SELECT * FROM 表格名  					查看数据
+CREATE TABLE 表格名（     
+		名称 类型 NOT NULL，			设置值不可为空
+		名称 类型 NULL				设置值可为空
+		名称 类型 AUTO_INCREMENT KEY		主键约束（每张数据表只能存在一个，确保记录唯一性，自动为NOT NULL）
+		名称 类型 KEY				（主键可以被赋值）
+）
+
+
+
+
+
+
+
+mysql -h localhost -u 用户名 -p         登入mysql
+show databases;    查看已有的数据库
+create database 库名;      创建数据库
+create database if not exists 库名;如果不存在则创建此库
+drop database 库名;        删除数据库
+drop database if exists 库名;      如果存在则删除此库
+create table 表格名（属性 类型，属性 类型......） 创建表格
+drop table 表格名  删除表格

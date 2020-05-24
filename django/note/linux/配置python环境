@@ -1,0 +1,42 @@
+sudo apt-get install build-essential checkinstall
+sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+mkdir -p /etc/python3.6
+cd /etc/python3.6
+wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
+sudo tar xzf Python-3.6.4.tgz
+cd Python-3.6.4
+sudo ./configure --enable-optimizations --prefix=/etc/python3.6
+sudo make altinstall
+ln -s /etc/python3.6/bin/python3.6 /usr/bin/python3.6
+ln -s /etc/python3.6/bin/pip3.6 /usr/bin/pip3.6
+
+
+vim ~/.bash_profile
+# .bash_profile
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+. ~/.bashrc
+fi
+# User specific environment and startup programs
+PATH=$PATH:$HOME/bin:/etc/python3.6/bin
+export PATH
+
+sudo apt install python3-pip
+
+sudo apt install python3-virtualenv
+
+pip3 install virtualenvwrapper
+
+sudo mkdir $HOME/.virtualenvs
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+# 虚拟环境存储的目录
+export WORKON_HOME=$HOME/.virtualenvs
+source /home/ubuntu/.local/bin/virtualenvwrapper.sh  # 此处是你的安装位置
+
+source ~/.bashrc
+
+详细：https://blog.csdn.net/licheetools/article/details/82946323
+
+
+

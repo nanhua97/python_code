@@ -1,0 +1,185 @@
+import tornado.web
+import tornado.ioloop
+import tornado.httpserver
+import tornado.options
+from tornado.web import RequestHandler,url,StaticFileHandler
+from tornado.options import define,options
+import os
+import torndb
+
+define('port',default='8000',type=int,help='this is the port')
+
+class IndexHandler(RequestHandler):
+    def initialize(self,subject):
+        self.subject = subject
+    def get(self):
+        self.write(self.request.remote_ip)
+        self.write(self.request.headers)
+        self.write(self.request.body)
+        #写入文件
+	with open("./statics/imgName","w+") as f:
+            f.write(self.request.files.get("imgName")[0]["body"])
+        self.write("<h1>hello world</h1>")
+    def post(self):
+        name = self.get_argument("name")
+
+class subjectHandler(RequestHandler):
+    def initialize(self,subject):
+        self.subject = subject
+    def get(self):
+        self.write(self.subject)
+
+class nameHandler(RequestHandler):
+    def initialize(self,subject):
+        self.subject = subject
+    def get(self):
+        rick_url = self.reverse_url("rick_url")
+
+class TempHandler(RequestHandler):
+    def get(self):
+        person_info = {
+            "name":"Rick",
+            "age":18,
+            "hobby":None
+        }
+        self.render("index.html",**person_info) 
+
+if __name__ == "__main__":
+    current_path = os.path.dirname(__file__)
+    tornado.options.parse_command_line()
+    app = tornado.web.Application([
+        (r"/",IndexHandler),
+        (r"/learn",subjectHandler,{"subject":"python"}),
+	url(r"/name",nameHandler,{"name":"Rick"},name="rick_url"),
+        #返回static文件
+        (r"^/views/(.*)$",StaticFileHandler,{"path":os.path.join(current_path,"statics/html"),"default_filename":"index.html"}),
+        #使用模板
+        (r"^/temp",TempHandler),
+        ],
+        static_path = os.path.join(current_path,"statics"),
+        template_path = os.path.join(current_path,"templates"),
+    )
+    httpServer = tornado.httpserver.HTTPServer(app)
+    httpServer.bind(options.port)
+    httpServer.start(4)
+    tornado.ioloop.current().start()
+
+
+RequestHandler中方法调用顺序:
+无错误时:
+	set_default_handers()
+	initialize()
+	prepare()
+	HTTP方法
+	on_finish()
+出错误时:
+	set_default_headers()
+	initialize()
+	prepare()
+	HTTP方法
+	set_default_headers()
+	write_error()
+	    (set_status(状态码,reason=None))
+	on_finish()
+
+数据库使用(重写Application):
+calss Application(tornado.web.Application):
+    def __init__(self):
+        handlers = [
+            (r"/"，IndexHandler),
+        ]
+        settings = dict(
+            template_path = os.path.join(os.path.dirname(__file__),"templates"),
+            static_path = os.path.join(os.path.dirname(__file__),"statics"),
+            debug=True,
+        )
+        super(Application,self).__init__(handlers,**settings)
+        self.db = torndb.Connection(
+            host="127.0.0.1",
+            database="test",
+            user="root",
+            password="mysql"
+        )
+
+class InsertHandler(RequestHandler):
+    def post(self):
+        name=self.get_argument("name")
+        age=self.get_argument("age")
+        hobby=self.get_argument("hobby")
+        try:
+            ret = self.Application.db.excute("insert into HeroInfo(name,age,hobby) values(%s %s %s)",name,age,hobby)
+        except Exception as e:
+            self.write("DB error:%s" % e)
+        else:
+            self.write("OK %d" %e) 
+
+class GetHandler(RequestHandler):
+    def gett(self):
+        hid = self.get_argument("id")
+        try:
+            ret = self.Application.db.get("select name,age,hobby from HeroInfo where id=%s",hid)
+        except Exception as e:
+            self.write("DB error:%s" % e)
+        else:
+            print type(ret)
+            print ret
+            print ret.title
+            print ret['title']
+            self.render("index.html", houses=[ret])
+
+class QueryHandler(RequestHandler):
+    def gett(self):
+        try:
+            ret = self.Application.db.get("select name,age,hobby from HeroInfo limit 10")
+        except Exception as e:
+            self.write("DB error:%s" % e)
+        else:
+             self.render("index.html", houses=ret)
+
+
+cookie操作:
+self.set_cookie("k1","v1")
+self.set_cookie("n2", "v2", path="/new", expires=time.strptime("2016-11-11 23:59:59","%Y-%m-%d %H:%M:%S"))
+self.set_cookie("n3", "v3", expires_days=20)
+
+self.set_header("Set-Cookie", "n5=v5; expires=Fri, 11 Nov 2016 15:59:59 GMT; Path=/") 
+
+self.get_cookie("k1")
+
+self.clear_cookie(name,path="/",domain=None)
+
+self.clear_all_cookies(path="/",domain=None)
+
+安全cookie:
+import base64, uuid'
+base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
+
+app = tornado.web.Application(
+    [(r"/", IndexHandler),],
+    cookie_secret = "2hcicVu+TqShDpfsjMWQLZ0Mkq5NPEWSk9fi0zsSt3A="
+)
+
+class IndexHandler(RequestHandler):
+    def get(self):
+        cookie = self.get_secure_cookie("count")
+        count = int(cookie) + 1 if cookie else 1
+        self.set_secure_cookie("count", str(count))
+        self.write(
+            '<html><head><title>Cookie计数器</title></head>'
+            '<body><h1>您已访问本页%d次。</h1>' % count + 
+            '</body></html>'
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+

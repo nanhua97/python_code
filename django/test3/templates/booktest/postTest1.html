@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="post" action="/booktest/postTest2">
+        <!--{% csrf_token %}-->
+        name:<input type="text" name="uname" />
+        <br>
+        password:<input type="text" name="upwd" />
+        <br>
+        gender:<input type="radio" name="ugender" value="male" checked/>male
+                <input type="radio" name="ugender" value="female" />female
+        <br>
+        hobby:<input type="checkbox" name="uhobby" value="computer"/>computer
+                <input type="checkbox" name="uhobby" value="chess"/>chess
+                <input type="checkbox" name="uhobby" value="basketball"/>cbasketball
+                <input type="checkbox" name="uhobby" value="football"/>football
+        <br>
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>

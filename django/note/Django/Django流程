@@ -1,0 +1,122 @@
+Django使用流程：
+django-admin startproject project
+cd project
+python manage.py startapp app
+
+修改urls.py,包含app下的urls.py
+vim project/urls.py
+
+为app下创建编写urls.py
+
+在project/settings中添加app，设置数据库，设置templates与static目录
+
+在app/models.py中编写模型类:
+	from django.db import models
+	class BookInfo(models.Model):
+	    title = models.CharField(max_length=20)
+	    creater = models.ForeignKey(CreateInfo)
+	    def __str__(self):
+	        return "%d" % self.pk
+	models.[CharField,DateTimeField,BooleanField](max_length=20,default=False)
+	models.ForeignKey(BookInfo)
+	__str__ 在输出对象时调用
+	BookInfo.objects.all() 选取所有图书
+	b = BookInfo.objects.get(pk=1) 根据条件选数据
+	b.title 输出
+	b.title = 'FOM' 修改
+	b.creater = creater(creater = CreaterInfo)
+	b.save() 保存
+	b.delete() 删除
+	creater.BookInfo_set.all()
+	b = creater.BookInfo_set.create(title="morty")
+	(注意关联对象的操作)
+将模型类中的数据结构映射到数据库中:
+	python manage.py makemigrations 生成迁移文件
+	python manage.py migrate 执行迁移
+
+Django 管理界面:
+	python manage.py createsuperuser  创建管理员用户
+	向app/admin.py 中注册模型
+	from django.contrib import admin
+	from models import *
+	admin.site.register(BookInfo)
+	自定义管理界面:
+		class QuestionAdmin(admin.ModelAdmin):
+		    ...
+		    ...
+		admin.site.register(Question,QuestionAdmin)
+		
+		list_display:显示字段，可以点击列头进行排序
+		list_display = ['pk','title']
+		list_filter:过滤字段，过滤框会出现在右侧
+		list_filter = ['title']
+		search_fields:搜索字段，搜索框会出现在上侧
+		search_fields = ['title']
+		list_per_page:分页，分页框会出现在下侧
+		list_per_page = 10
+		
+		fields:属性的先后顺序
+		fields = ['title','pk']
+		fieldsets:属性分组
+		fieldsets = [
+		    ('basic',{'fields':['title']}),
+		    ('more',{'fields':['pk','date']}),
+		]
+
+	关联对象:
+		关联注册:
+		from django.contrib import admin
+		from models import BookInfo,CreateInfo
+ 		
+		class BookInfoInline(admin.StackedInline):
+		    model = BookInfo
+		    extra = 2
+		class CreateInfoAdmin(admin.ModelAdmin):
+		    inlines = [BookInfoInline]
+		
+		admin.site.register(BookInfo,BookInfoAdmin)
+		
+		将内嵌方式改为表格:
+		class BookInfoInline(admin.TabularInline)
+	
+		布尔值的显示:
+		def gender(self):
+		    if self.gender:
+		        return '男'
+		    else:
+		        return '女'
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

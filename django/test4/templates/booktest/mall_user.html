@@ -1,0 +1,16 @@
+{% extends 'booktest/mall_base.html' %}
+{% block js %}
+
+{% endblock js %}
+{% block content %}
+    <table border="1">
+        <tr>
+            <td height="300">用户导航</td>
+            <td>
+                {% block user_content %}
+
+                {% endblock user_content %}
+            </td>
+        </tr>
+    </table>
+{% endblock content %}

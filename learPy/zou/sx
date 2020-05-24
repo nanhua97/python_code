@@ -1,0 +1,23 @@
+#!/usr/bin/env/python3
+# -*- coding:utf-8 -*-
+import re
+from urllib import request
+def getHtml(url):
+    with request.urlopen(url) as f:
+        html = f.read().decode('utf-8')
+        reContent = re.compile('<div id="content">.*</div>')
+        content = re.findall(reContent,html)
+        return content[0]
+def getText(html):
+    bk = html.replace('<br/>','\n')
+    rm = re.compile('[<>a-z()="]')
+    l = re.split(rm,bk)
+    return ''.join(l)
+usr = input('please input a url')
+html = getHtml(usr)
+text = getText(html)
+f = open('text.txt','a')
+f.write('\n\nnew text\n\n')
+f.write(text)
+f.close()
+

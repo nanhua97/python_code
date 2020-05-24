@@ -1,0 +1,35 @@
+pip install Django == 1.9.1
+
+django-admin startproject djangosite
+djangosite/             
+  manage.py           管理工具
+  djangosite/         包含本项目的实际文件
+    __init__.py       python包
+    setting.py        配置文件（定义了组件，项目名，后续配置数据库，导入其他python包）
+    urls.py           定义客户端访问的URL由哪个模块处置
+    wsgi.py           定义WSGI接口信息，用于与其他web服务器集成，一般后续不用改动
+python-admin startapp app
+djangosite/
+  manage.py
+  djangosite/
+    __init__.py
+    setting.py
+    urls.py
+    wsgi.py
+  app/
+    __init__.py
+    admin.py          管理站点模型的声明文件，默认空
+    apps.py           应用信息文件。其中生成类AppConfig，用于定义应用名等Meta数据
+    migrations/       定义引用迁移功能（python manage.py makemigrations app）（python manage.py migrate:使修改同步到数据库）
+      __init__.py
+    models.py         添加模型层数据类文件
+    tests.py          测试代码文件
+    views.py          定义URL响应函数
+python manage.py runserver 0.0.0.0:8888   内置web服务器
+
+
+from django.http import HttpResponse
+from django.conf.urls import include,url
+from django.contrib import admin
+from django.db import models          所有Django模型类必须继承自它
+from django.froms import ModelForm    所有Django表单的基类

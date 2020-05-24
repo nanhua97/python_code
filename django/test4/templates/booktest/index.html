@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href={% url "booktest:show" "123" "456" %}>提交</a>
+<hr>
+    {{ hero.hname }}
+    {{ hero.showname }}
+    <hr>
+<ul>
+    <!--gowhich.com/blog/502-->
+    {% for hero in list %}
+    {% if forloop.counter|divisibleby:"2" %}
+    <li style="color:red">{{ hero.hname }}</li>
+    {% else %}
+    <li style="color:blue">{{ hero.hname }}</li>
+    {% endif %}
+    {% empty %}
+    <li>什么都没有</li>
+    {% endfor %}
+</ul>
+{% comment %}
+    blog.csdn.net/xyp84/artical/details/7945094
+{% endcomment%}
+
+{#  注释 #}
+
+</body>
+</html>

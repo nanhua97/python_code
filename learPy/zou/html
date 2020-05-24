@@ -1,0 +1,19 @@
+#!/usr/bin/env/python3
+# -*- coding:utf-8 -*-
+import re 
+import urllib
+def getHtml(url):
+    page = urllib.urlopen(url)
+    html = page.read()
+    return html
+def getImg(html):
+    reg = r'src="(.*?\.jpg)" width'
+    imgre = re.compile(reg)
+    imgList = re.findall(imgre,html)
+    n = 0
+    for i in imgList:
+        n += 1
+        urllib.urlretrieve(i,'%s.jpg'%n)
+a = getHtml('https://tieba.baidu.com/f?kw=%CD%BC%C6%AC&fr=ala0&tpl=5')
+b = getImg(a)
+print(b)

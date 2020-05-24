@@ -1,0 +1,14 @@
+<!DCOTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TITLE</title>
+</head>
+<body>
+{% for book in title %}
+<ul>
+    <li><a href="{{book.id}}">{{book}}</a></li>
+</ul>
+{% endfor %}
+</body>
+</html>

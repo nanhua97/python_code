@@ -1,0 +1,29 @@
+网络命令
+writh + 用户 ：给在线用户发信息  Ctrl+D 结束
+wall ：给所有用户发信息
+ping 选项 IP地址  ：测试网络连通性
+     -c           指定发送次数
+email +用户 ：发送信息
+      h：查看邮件列表
+      d：删除
+      n：查看
+last ：查看用户的登录信息
+lastlog ：查看最后一次登陆的信息
+traceroute ：查看经过的节点
+ifconfig ：
+netstat -t ：TCP协议（打电话）
+	-u ：UDP协议（发短信）
+	-l ：监听
+	-r ：路由
+	-n ：显示IP地址和端口
+netstat -tlun  ：查看本机的监听端口
+netstat -an ：查看本机所有的网络连接
+netstat -rn ：查看本机路由表
+setup  redhat系列专有的服务配置设置
+
+光盘挂载
+mkdir /mnt/cdrom  创建挂载点
+mount+【-t iso9660】+设备文件名+挂载点
+mount /dev/sr0  挂载
+cd /mnt/cdrom  访问光盘的数据 
+umount /dev/sr0  （离开光盘挂载点）卸载光盘
